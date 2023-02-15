@@ -66,6 +66,8 @@ public class ChannelConfigurationEditorFactory
                 return new P25P1ConfigurationEditor(playlistManager, tunerManager, userPreferences);
             case P25_PHASE2:
                 return new P25P2ConfigurationEditor(playlistManager, tunerManager, userPreferences);
+            case TETRA:
+                return new TETRAConfigurationEditor(playlistManager, tunerManager, userPreferences);
             default:
                 if(decoderType != null && !mLoggedUnrecognizedTypes.contains(decoderType))
                 {

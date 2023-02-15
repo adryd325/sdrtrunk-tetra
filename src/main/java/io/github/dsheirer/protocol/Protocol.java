@@ -44,6 +44,7 @@ public enum Protocol
     MPT1327("MPT-1327", "MPT1327", 1200),
     PASSPORT("Passport", "PASSPORT", 300),
     TAIT1200("Tait 1200", "TAIT1200", 1200),
+    TETRA("TETRA", "TETRA", 36000),
     UDP("UDP", "UDP", 0),
     UNKNOWN("Unknown", "UNKNOWN", 0);
 

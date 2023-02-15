@@ -87,6 +87,8 @@ import io.github.dsheirer.module.decode.passport.PassportDecoderState;
 import io.github.dsheirer.module.decode.passport.PassportMessageFilter;
 import io.github.dsheirer.module.decode.tait.Tait1200Decoder;
 import io.github.dsheirer.module.decode.tait.Tait1200DecoderState;
+import io.github.dsheirer.module.decode.tetra.DecodeConfigTETRA;
+import io.github.dsheirer.module.decode.tetra.TETRADecoder;
 import io.github.dsheirer.module.decode.traffic.TrafficChannelManager;
 import io.github.dsheirer.module.demodulate.am.AMDemodulatorModule;
 import io.github.dsheirer.module.demodulate.fm.FMDemodulatorModule;
@@ -174,6 +176,9 @@ public class DecoderFactory
                 break;
             case P25_PHASE2:
                 processP25Phase2(channel, userPreferences, modules, aliasList);
+                break;
+            case TETRA:
+                processTETRA(channel, modules, aliasList, (DecodeConfigTETRA) decodeConfig);
                 break;
             default:
                 throw new IllegalArgumentException("Unknown decoder type [" + decodeConfig.getDecoderType().toString() + "]");
@@ -389,6 +394,10 @@ public class DecoderFactory
         }
     }
 
+    public static void processTETRA(Channel channel, List<Module> modules, AliasList aliasList, DecodeConfigTETRA decodeConfig) {
+        modules.add(new TETRADecoder(decodeConfig));
+    }
+
     /**
      * Constructs a list of auxiliary decoders, as specified in the configuration
      *
@@ -528,6 +537,8 @@ public class DecoderFactory
                 return new DecodeConfigP25Phase1();
             case P25_PHASE2:
                 return new DecodeConfigP25Phase2();
+            case TETRA:
+                return new DecodeConfigTETRA();
             default:
                 throw new IllegalArgumentException("DecodeConfigFactory - unknown decoder type [" + decoder.toString() + "]");
         }
@@ -590,6 +601,10 @@ public class DecoderFactory
                     return copyP25P2;
                 case PASSPORT:
                     return new DecodeConfigPassport();
+                case TETRA:
+                    DecodeConfigTETRA originalTETRA = (DecodeConfigTETRA) config;
+                    DecodeConfigTETRA copyTETRA = new DecodeConfigTETRA();
+                    return copyTETRA;
                 default:
                     throw new IllegalArgumentException("Unrecognized decoder configuration type:" + config.getDecoderType());
             }

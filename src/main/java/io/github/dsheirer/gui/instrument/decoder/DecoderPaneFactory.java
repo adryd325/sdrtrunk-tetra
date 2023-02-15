@@ -34,6 +34,7 @@ public class DecoderPaneFactory
         DecoderType.MDC1200,
         DecoderType.MPT1327,
         DecoderType.TAIT_1200,
+            DecoderType.TETRA,
             DecoderType.DMR);
 
     /**
@@ -61,6 +62,8 @@ public class DecoderPaneFactory
                 return new P25Phase2HDQPSKPane();
             case DMR:
                 return new DMRPane();
+            case TETRA:
+                return new TETRAPane();
         }
 
         return getDefaultPane();
